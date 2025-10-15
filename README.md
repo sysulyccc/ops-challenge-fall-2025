@@ -10,6 +10,19 @@
 * 由于初次尝试，系统非常可能具有极大的不稳定性，如遇 bug 请反馈给会长，相信通过大家不断的使用，系统会快速迭代起来
 * 任何问题都可以随意提 issue
 
+## Setup Env
+
+```bash
+# 0. A env with python=3.11
+
+# op1. pip
+pip install -r requirements.txt
+
+# op2. poetry
+poetry env use python3.11
+poetry install
+```
+
 ## Build ops
 
 * 在 `src/solution.py` 是参考的基础 pandas 写法，需要完成读取+计算两个步骤
@@ -17,7 +30,32 @@
     * 用于测试的 `main` 逻辑自行完成，提交时请只保留函数
     * Action 的 Runner 给大家配备了 20 个核心，所以在本地测试的时候也尽量把多核都用上，可以通过 `top` 或者 `htop` 来监测 CPU 利用率哦
     * 加速方法参考
+
 * 测试数据可以从 [北大网盘](https://disk.pku.edu.cn/link/AAFFF38B6E06344AC9B26E9A1B66424089) 获取，需要校园网
+
+* 或者通过 Google Drive
+
+  ```bash
+  cd testcase
+  
+  # data_for_rolling_rank.parquet
+  gdown --fuzzy 'https://drive.google.com/file/d/1824YNBPcsekP04RawFBAw0T-5-KkNDvj/view?usp=drive_link'
+  
+  # rolling_rank_dense_v1.npy
+  gdown --fuzzy 'https://drive.google.com/file/d/1nhfiCufcd5cQL_QkgaOmKU0OQoM9o7_8/view?usp=drive_link'
+  ```
+
+## Test
+
+* 参考的测试脚本在 `localTest.py`
+
+  ```bash
+  python localTest.py \
+  	--entry_point ops_rolling_rank \
+  	--input_path ./testcase/data_for_rolling_rank.parquet \
+  	--ref_ans_path ./testcase/rolling_rank_dense_v1.npy\
+  	--window 20
+  ```
 
 ## Submit PR
 
