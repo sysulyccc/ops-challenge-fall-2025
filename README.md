@@ -8,7 +8,7 @@
 * 评分的 Action 需要通过提交 PR 来触发，所以这也是一个熟悉 Git/Github 的一个机会
     * 注意，需要加入 AFT25 Organization 才能够触发 Action # WIP
 * 由于初次尝试，系统非常可能具有极大的不稳定性，如遇 bug 请反馈给会长，相信通过大家不断的使用，系统会快速迭代起来
-* 任何问题都可以随意提 issue
+* 任何问题都可以随意提 Issue 或者 Discussion
 
 ## Setup Env
 
