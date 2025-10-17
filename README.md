@@ -31,7 +31,7 @@ poetry install
     * Action 的 Runner 给大家配备了 20 个核心，所以在本地测试的时候也尽量把多核都用上，可以通过 `top` 或者 `htop` 来监测 CPU 利用率哦
     * 加速方法参考
 
-* 测试数据可以从 [北大网盘](https://disk.pku.edu.cn/link/AAFFF38B6E06344AC9B26E9A1B66424089) 获取，需要校园网
+* 测试数据可以从 [北大网盘](https://disk.pku.edu.cn/link/AA792794F02CAD41588EB1CCCB37085C18) 获取，需要校园网
 
 * 或者通过 Google Drive
 
@@ -39,10 +39,10 @@ poetry install
   cd testcase
   
   # data_for_rolling_rank.parquet
-  gdown --fuzzy 'https://drive.google.com/file/d/1824YNBPcsekP04RawFBAw0T-5-KkNDvj/view?usp=drive_link'
+  gdown --fuzzy https://drive.google.com/file/d/1rsB4fz_RbZowiOISEQxsCpr0QKUywJj1/view?usp=drive_link
   
   # rolling_rank_dense_v1.npy
-  gdown --fuzzy 'https://drive.google.com/file/d/1nhfiCufcd5cQL_QkgaOmKU0OQoM9o7_8/view?usp=drive_link'
+  gdown --fuzzy https://drive.google.com/file/d/1tmaaFt6elqsRgwsOB6fbiV9dqcV70qaP/view?usp=drive_link
   ```
 
 ## Test
@@ -61,7 +61,7 @@ poetry install
 
 1. 点击 fork 将仓库到自己的 Github 下
 2. 建立一个新分支，例如 `git checkout -b week1`
-3. 从 [北大网盘](https://disk.pku.edu.cn/link/AAFFF38B6E06344AC9B26E9A1B66424089) 下载 Testcase，在本地修改并测试 `src/solution.py` 后 push 回本地
+3. 从北大网盘下载 Testcase，在本地修改并测试 `src/solution.py` 后 push 回本地
 4. 在你的本地仓库提交 PR
 5. 提交一次即可，同一个 PR 可以反复修改然后重跑 Action，但后端的 LeaderBoard 可能只会计算前三次的成绩
 6. 如果 Action 失败（非常有可能）可以截图发给学术副会
