@@ -1,27 +1,36 @@
-import pandas as pd
+import polars as pl
 import numpy as np
 
+class ops:
+    @staticmethod
+    def rolling_regbeta(col_x_or_expr, col_y_or_expr, window: int) -> pl.Expr:
+        if isinstance(col_x_or_expr, str):
+            expr_x = pl.col(col_x_or_expr)
+        else:
+            expr_x = col_x_or_expr
 
-def ops_rolling_rank(input_path: str, window: int = 20) -> np.ndarray:
-    df = pd.read_parquet(input_path)
+        if isinstance(col_y_or_expr, str):
+            expr_y = pl.col(col_y_or_expr)
+        else:
+            expr_y = col_y_or_expr
 
-    def rolling_percentile_rank(series):
-        def rank_window(window_data):
-            if len(window_data) == 0:
-                return np.nan
-            current_val = window_data.iloc[-1]
-            rank_sum = (window_data <= current_val).sum()
-            return rank_sum / len(window_data)
+        cov_xy = pl.rolling_cov(expr_x, expr_y, window_size=window, ddof=1, min_samples=2) # ddof=1
+        var_x = expr_x.rolling_var(window_size=window, ddof=1, min_samples=2)
 
-        return series.rolling(window=window, min_periods=1).apply(
-            rank_window, raw=False
-        )
-
-    ranks = df.groupby('symbol', group_keys=False)['Close'].apply(
-        rolling_percentile_rank
-    )
-
-    res = ranks.values.astype(np.float32)
-    return res[:, None] # must be [N, 1]
+        # Must use the same var_x threshold
+        # When var_x is close to 0, beta = 0
+        return pl.when(var_x < 1e-6).then(0.0).otherwise(cov_xy / var_x).alias("rolling_regbeta")
 
 
+def ops_rolling_regbeta(input_path: str, window: int = 20) -> np.ndarray:
+    res = (
+        pl.scan_parquet(input_path)
+        .with_columns([
+            pl.col("Close"),
+            pl.col("Low")
+        ])
+        .select(
+            ops.rolling_regbeta("Low", "Close", window).over("symbol")
+        )
+    ).collect()
+    return res.to_numpy()
